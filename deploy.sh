@@ -6,7 +6,7 @@ mkdir -p build
 python3 -I inline.py ../trip.html build/index.html assets
 STATICRYPT_PASSWORD="$(cat .password)" npx -y staticrypt@3 build/index.html -d docs --short --remember 180 \
   --template-title "הטיול לתאילנד וויאטנם" \
-  --template-instructions "הקלידו את הסיסמה שקיבלתם מניר" \
+  --template-instructions "הקלידו את הסיסמה שקיבלתם מניר וממאיה" \
   --template-button "כניסה" --template-placeholder "סיסמה" \
   --template-remember "לזכור אותי במכשיר הזה" --template-error "הסיסמה לא נכונה" \
   --template-color-primary "#0E8A7E" --template-color-secondary "#0f4c5c"
