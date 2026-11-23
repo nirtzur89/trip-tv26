@@ -11,5 +11,7 @@ STATICRYPT_PASSWORD="$(cat .password)" npx -y staticrypt@3 build/index.html -d d
   --template-remember "לזכור אותי במכשיר הזה" --template-error "הסיסמה לא נכונה" \
   --template-color-primary "#0E8A7E" --template-color-secondary "#0f4c5c"
 cp static/* docs/
+SITE_LINK="$(STATICRYPT_PASSWORD="$(cat .password)" npx -y staticrypt@3 --share https://nirtzur89.github.io/trip-tv26/ --share-remember 2>/dev/null | tail -1)"
+python3 -I export_data.py ../trip.html "$SITE_LINK" | openssl enc -aes-256-cbc -pbkdf2 -salt -a -pass file:.datakey > docs/d.enc
 touch docs/.nojekyll
 if [ -d .git ]; then git add -A && (git diff --cached --quiet || git commit -q -m "Update site") && git push -q; fi
