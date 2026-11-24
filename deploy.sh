@@ -2,15 +2,17 @@
 # Rebuilds the password-protected copy of the trip page and pushes it to GitHub Pages.
 set -euo pipefail
 cd "$(dirname "$0")"
-# Sync the page source with the private repo (trip-tv26-source) so edits made on GitHub are included.
-if [ -d ../.git ]; then
-  git -C .. add trip.html
-  git -C .. diff --cached --quiet || git -C .. commit -q -m "Update trip page"
+# Local runs: sync the page source with the private repo (trip-tv26-source) so edits made on GitHub are included,
+# and pick up any deploy the GitHub Action already pushed. In CI the checkout is already current.
+if [ -z "${CI:-}" ] && [ -d ../.git ]; then
+  git -C .. add trip.html assets
+  git -C .. diff --cached --quiet || git -C .. commit -q -m "Update trip page [skip ci]"
   git -C .. pull -q --rebase || { git -C .. rebase --abort; echo "Source repo has conflicting edits; resolve them before deploying." >&2; exit 1; }
   git -C .. push -q
+  git pull -q --rebase --autostash
 fi
 mkdir -p build
-python3 -I inline.py ../trip.html build/index.html assets
+python3 -I inline.py ../trip.html build/index.html ../assets
 STATICRYPT_PASSWORD="$(cat .password)" npx -y staticrypt@3 build/index.html -d docs --short --remember 180 \
   --template-title "הטיול לתאילנד וויאטנם" \
   --template-instructions "הקלידו את הסיסמה שקיבלתם מניר וממאיה" \
