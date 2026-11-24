@@ -2,6 +2,13 @@
 # Rebuilds the password-protected copy of the trip page and pushes it to GitHub Pages.
 set -euo pipefail
 cd "$(dirname "$0")"
+# Sync the page source with the private repo (trip-tv26-source) so edits made on GitHub are included.
+if [ -d ../.git ]; then
+  git -C .. add trip.html
+  git -C .. diff --cached --quiet || git -C .. commit -q -m "Update trip page"
+  git -C .. pull -q --rebase || { git -C .. rebase --abort; echo "Source repo has conflicting edits; resolve them before deploying." >&2; exit 1; }
+  git -C .. push -q
+fi
 mkdir -p build
 python3 -I inline.py ../trip.html build/index.html assets
 STATICRYPT_PASSWORD="$(cat .password)" npx -y staticrypt@3 build/index.html -d docs --short --remember 180 \
