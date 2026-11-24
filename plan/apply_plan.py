@@ -41,7 +41,7 @@ vn_list='''  <ul class="stops2">
 a=s.index('<h3 class="section-h">ויאטנם</h3>');b=s.index('<ul class="stops2">',a);e=s.index('</ul>',b)+6
 s=s[:b].rstrip(' ')+vn_list.lstrip(' ') .join(['',''])+s[e:] if False else s[:b-2]+vn_list+s[e:]
 vn=[d for d in P if d[1]=='next' and d[0]<'2026-12-29']
-tl='<!--VN-DAYS-->\n  <h4 class="cat">🗓 ויאטנם, יום אחר יום (הצעה)</h4>\n  <p class="meta">המסלול הזה עוד לא הוזמן. הוא בנוי כך שבכל יום יש דבר מרכזי אחד בבוקר ומנוחה בצהריים.</p>\n  <div class="timeline">\n'+''.join(f'    <div class="day" data-date="{d[0]}"><h4>{dm(d[0])} <span class="dow">· יום {dow(d[0])}</span></h4><p>{d[3] or ""}</p></div>\n' for d in vn)+'  </div>\n<!--/VN-DAYS-->\n'
+tl='<!--VN-DAYS-->\n  <h4 class="cat">🗓 ויאטנם, יום אחר יום (הצעה)</h4>\n  <p class="meta">המסלול הזה עוד לא הוזמן. הוא בנוי כך שבכל יום יש דבר מרכזי אחד בבוקר ומנוחה בצהריים. הימים בהוי אן, 16.12–21.12, נמצאים בלשונית ״הוי אן״.</p>\n  <div class="timeline">\n'+''.join(f'    <div class="day" data-date="{d[0]}"><h4>{dm(d[0])} <span class="dow">· יום {dow(d[0])}</span></h4><p>{d[3] or ""}</p></div>\n' for d in vn)+'  </div>\n<!--/VN-DAYS-->\n'
 if '<!--VN-DAYS-->' in s:
     s=re.sub(r'<!--VN-DAYS-->.*?<!--/VN-DAYS-->\n',lambda m:tl,s,flags=re.S)
 else:

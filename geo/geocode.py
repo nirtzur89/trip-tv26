@@ -2,7 +2,7 @@
 import re,json,time,urllib.parse as U,urllib.request as R,math,html,os,sys
 src,out=sys.argv[1],sys.argv[2]
 s=open(src,encoding='utf-8').read()
-C={'bangkok':(13.75,100.50),'chiangmai':(18.79,98.98),'pai':(19.36,98.44),'chiangrai':(19.91,99.83),'hanoi':(21.03,105.85),'sapa':(22.34,103.84)}
+C={'bangkok':(13.75,100.50),'chiangmai':(18.79,98.98),'pai':(19.36,98.44),'chiangrai':(19.91,99.83),'hanoi':(21.03,105.85),'sapa':(22.34,103.84),'hoian':(15.88,108.33)}
 NEXT=[(8.69,98.25),(8.05,98.76),(13.75,100.50),(20.25,105.97),(8.45,98.52),(8.9,98.8),(8.88,98.35)]
 def km(a,b):
     la1,lo1,la2,lo2=map(math.radians,(a[0],a[1],b[0],b[1]));h=math.sin((la2-la1)/2)**2+math.cos(la1)*math.cos(la2)*math.sin((lo2-lo1)/2)**2
